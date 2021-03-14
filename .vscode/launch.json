@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // Head, network, configs
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Finetune",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/SENSETIME/shaoyidi/VirtualenvProjects/mmcls_mixup/pycls/tools/train_net.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--cfg", "/home/SENSETIME/shaoyidi/VirtualenvProjects/mmcls_mixup/pycls/configs/archive/imagenet/resnet/R-50-1x64d_step_1gpu.yaml",
+                "TRAIN.WEIGHTS", "/home/SENSETIME/shaoyidi/VirtualenvProjects/mmcls_mixup/model_epoch_0001.pyth",
+                "OUT_DIR", "./work_dirs"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Python: Train.py",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/SENSETIME/shaoyidi/VirtualenvProjects/mmcls_mixup/pyclsone/pycls/tools/train_net.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--cfg", "/home/SENSETIME/shaoyidi/VirtualenvProjects/mmcls_mixup/pyclsone/pycls/configs/archive/imagenet/resnet/R-50-1x64d_step_1gpu.yaml",
+                // "TRAIN.WEIGHTS", "https://dl.fbaipublicfiles.com/pycls/dds_baselines/resnet/R-50-1x64d_dds_8gpu.yaml",
+                "OUT_DIR", "./work_dirs"
+            ],
+            "justMyCode": false
+        }
+    ]
+}

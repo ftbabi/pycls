@@ -238,7 +238,8 @@ _C.TRAIN.BATCH_SIZE = 128
 _C.TRAIN.IM_SIZE = 224
 
 # Resume training from the latest checkpoint in the output directory
-_C.TRAIN.AUTO_RESUME = True
+# _C.TRAIN.AUTO_RESUME = True
+_C.TRAIN.AUTO_RESUME = False
 
 # Weights to start training from
 _C.TRAIN.WEIGHTS = ""
