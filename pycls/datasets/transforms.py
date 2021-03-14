@@ -13,20 +13,33 @@ import cv2
 import numpy as np
 from PIL import Image
 from pycls.datasets.augment import make_augment
+import mmcv
 
 
 def scale_and_center_crop(im, scale_size, crop_size):
     """Performs scaling and center cropping (used for testing)."""
-    h, w = im.shape[:2]
-    if w < h and w != scale_size:
-        w, h = scale_size, int(h / w * scale_size)
-        im = cv2.resize(im, (w, h), interpolation=cv2.INTER_LINEAR)
-    elif h <= w and h != scale_size:
-        w, h = int(w / h * scale_size), scale_size
-        im = cv2.resize(im, (w, h), interpolation=cv2.INTER_LINEAR)
-    x = ceil((w - crop_size) / 2)
-    y = ceil((h - crop_size) / 2)
-    return im[y : (y + crop_size), x : (x + crop_size), :]
+    # h, w = im.shape[:2]
+    # if w < h and w != scale_size:
+    #     w, h = scale_size, int(h / w * scale_size)
+    #     im = cv2.resize(im, (w, h), interpolation=cv2.INTER_LINEAR)
+    # elif h <= w and h != scale_size:
+    #     w, h = int(w / h * scale_size), scale_size
+    #     im = cv2.resize(im, (w, h), interpolation=cv2.INTER_LINEAR)
+    # x = ceil((w - crop_size) / 2)
+    # y = ceil((h - crop_size) / 2)
+    # prev_im = im[y : (y + crop_size), x : (x + crop_size), :]
+    # MMCV
+    img = im
+    crop_height, crop_width = crop_size, crop_size
+    img_height, img_width = img.shape[:2]
+    y1 = max(0, int(round((img_height - crop_height) / 2.)))
+    x1 = max(0, int(round((img_width - crop_width) / 2.)))
+    y2 = min(img_height, y1 + crop_height) - 1
+    x2 = min(img_width, x1 + crop_width) - 1
+
+    # crop the image
+    img = mmcv.imcrop(img, bboxes=np.array([x1, y1, x2, y2]))
+    return img
 
 
 def random_sized_crop(im, size, area_frac=0.08, max_iter=10):

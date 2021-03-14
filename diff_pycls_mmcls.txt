@@ -1,0 +1,21 @@
+diff
+pycls:
+1. lighting
+2. convert RGB to BGR
+
+
+pycls:
+1. pycls.core.checkpoint.py::load_checkpoint 92
+	don't load optimizer from checkpoint
+2. pycls.core.trainer.py::train_epoch 76
+	no shuffle; top 1 only;
+3. pycls.core.trainer.py::test_epoch 104
+	top 1 only
+4. pycls.dataset.imagenet.py::_prepare_im 78~82, 89~91
+	No aug; No BGR
+5. pycls.dataset.loader.py::construct_train_loader 59, 78
+	No shuffle; No shuffle
+6. pycls.dataset.transforms.py::scale_and_center_crop 21~42
+	Use the same code as mmcv
+
+

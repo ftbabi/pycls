@@ -89,7 +89,7 @@ def load_checkpoint(checkpoint_file, model, optimizer=None):
     with g_pathmgr.open(checkpoint_file, "rb") as f:
         checkpoint = torch.load(f, map_location="cpu")
     unwrap_model(model).load_state_dict(checkpoint["model_state"])
-    optimizer.load_state_dict(checkpoint["optimizer_state"]) if optimizer else ()
+    # optimizer.load_state_dict(checkpoint["optimizer_state"]) if optimizer else ()
     return checkpoint["epoch"]
 
 

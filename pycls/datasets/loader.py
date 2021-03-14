@@ -56,7 +56,7 @@ def construct_train_loader():
         dataset_name=cfg.TRAIN.DATASET,
         split=cfg.TRAIN.SPLIT,
         batch_size=int(cfg.TRAIN.BATCH_SIZE / cfg.NUM_GPUS),
-        shuffle=True,
+        shuffle=False,
         drop_last=True,
     )
 
@@ -75,7 +75,7 @@ def construct_test_loader():
 def shuffle(loader, cur_epoch):
     """"Shuffles the data."""
     err_str = "Sampler type '{}' not supported".format(type(loader.sampler))
-    assert isinstance(loader.sampler, (RandomSampler, DistributedSampler)), err_str
+    # assert isinstance(loader.sampler, (RandomSampler, DistributedSampler)), err_str
     # RandomSampler handles shuffling automatically
     if isinstance(loader.sampler, DistributedSampler):
         # DistributedSampler shuffles data based on epoch

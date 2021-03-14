@@ -75,17 +75,20 @@ class ImageNet(torch.utils.data.Dataset):
         train_size, test_size = cfg.TRAIN.IM_SIZE, cfg.TEST.IM_SIZE
         if self._split == "train":
             # For training use random_sized_crop, horizontal_flip, augment, lighting
-            im = transforms.random_sized_crop(im, train_size)
-            im = transforms.horizontal_flip(im, prob=0.5)
-            im = transforms.augment(im, cfg.TRAIN.AUGMENT)
-            im = transforms.lighting(im, cfg.TRAIN.PCA_STD, _EIG_VALS, _EIG_VECS)
+            # im = transforms.random_sized_crop(im, train_size)
+            # im = transforms.horizontal_flip(im, prob=0.5)
+            # im = transforms.augment(im, cfg.TRAIN.AUGMENT)
+            # im = transforms.lighting(im, cfg.TRAIN.PCA_STD, _EIG_VALS, _EIG_VECS)
+            im = transforms.scale_and_center_crop(im, test_size, train_size)
         else:
             # For testing use scale and center crop
             im = transforms.scale_and_center_crop(im, test_size, train_size)
         # For training and testing use color normalization
         im = transforms.color_norm(im, _MEAN, _STD)
         # Convert HWC/RGB/float to CHW/BGR/float format
-        im = np.ascontiguousarray(im[:, :, ::-1].transpose([2, 0, 1]))
+        # im = np.ascontiguousarray(im[:, :, ::-1].transpose([2, 0, 1]))
+        # This is the same with mmcls, 'ToTensor' transform
+        im = np.ascontiguousarray(im.transpose([2, 0, 1]))
         return im
 
     def __getitem__(self, index):
